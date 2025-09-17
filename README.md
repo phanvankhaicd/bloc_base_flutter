@@ -1,36 +1,63 @@
-# Flutter Base
+# flutter_starter
 
-## Information
+A new Flutter project.
 
-Flutter version: `3.10.6`
+## Getting Started
 
-### Base Flutter with:
+- Install [Fvm](https://fvm.app/docs/getting_started/installation).
 
-- State management: [flutter_bloc](https://pub.dev/packages/flutter_bloc)
-- Asset management: [flutter_gen](https://pub.dev/packages/flutter_gen)
-- Flavor management: [flutter_flavorizr](https://pub.dev/packages/flutter_flavorizr)
-- Evironment management: [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
-- Route management: [auto_route](https://pub.dev/packages/auto_route)
-- Dependencies
-  Injection: [get_it](https://pub.dev/packages/get_it) + [injectable](https://pub.dev/packages/injectable)
-- Responsiveness: [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
--
-Localization: [flutter_localizations](https://docs.flutter.dev/ui/accessibility-and-localization/internationalization)
+- Go to this project folder and run `fvm install` to install the correctsponding Flutter SDK version.
 
-### and Boilerplate code for:
+> If you are not using Fvm, make sure your Flutter version in your local machine matched with the `.fvm/fvm_config.json`
 
-- Screen: Splash, Intro, Language, Settings
-- Firebase: Remote config, Analytics
-- Admob intergration & meta ads mediation
-- AppsFlyers SDK
-- IAP (optional) --> later
+- Run `flutter doctor` and make sure that there is no error occurred.
 
-## Usage
+> This project is optimized for [Visual Studio Code](https://code.visualstudio.com/) users
 
-Setup
+## Developing
 
-```console
-flutter pub get
-flutter gen-l10n
-flutter pub run build_runner build --delete-conflicting-outputs
+### Running the app
+
+- Run `flutter run --flavor=dev -t lib/main_dev.dart` to run the app in development environment.
+- Run `flutter run --flavor=staging -t lib/main_staging.dart` to run the app in staging environment.
+- Run `flutter run --flavor=production -t lib/main_production.dart` to run the app in production environment.
+
+### When adding a new translated text
+
+- Add the translated text to `lib/presenter/languages/translations/<langualge>.json`
+
+- Run this script to generate the translation keys
+
+```bash
+flutter pub run easy_localization:generate \
+  -f keys \
+  -S lib/presenter/languages/translations \
+  -O lib/presenter/languages \
+  -o translation_keys.g.dart
+```
+
+> If you are using Visual Studio Code, you can run this script by pressing `Cmd + Shift + P` and type `Run Task` and select `easy_localization: generate keys`
+
+### When adding new page
+
+- Run this script to activate `mason_cli` (if you haven't done it before)
+
+```bash
+flutter pub global activate mason_cli
+mason get
+```
+
+- Run this script to generate a new page with basic cubit
+
+```bash
+mason make bloc_page
+```
+
+> If you are using Visual Studio Code, you can run this script by pressing `Cmd + Shift + P` and type `Run Task` and select `mason: bloc_page`
+
+
+### Command run build gen
+```bash
+dart run build_runner watch --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```

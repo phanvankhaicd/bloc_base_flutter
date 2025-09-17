@@ -1,24 +1,27 @@
-import 'dart:async';
-
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import 'app/app.dart';
-import 'src/config/app_config.dart';
-import 'src/shared/utils/logger_utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_starter/data/states/auth/auth_bloc.dart';
+import 'package:flutter_starter/data/states/bloc_observer.dart';
+import 'package:flutter_starter/di.dart';
+import 'package:flutter_starter/presenter/app.dart';
+import 'package:flutter_starter/presenter/languages/languages.dart';
 
 Future<void> main() async {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await AppConfig.getInstance().init();
-    runApp(
-      const MyApp(),
-    );
-  }, (error, stack) {
-    logger.e('ERROR', error, stack);
-    if (!kDebugMode) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    }
-  });
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await EasyLocalization.ensureInitialized();
+
+  await configureDependencies();
+
+  Bloc.observer = AppBlocObserver(provider.get<AuthBloc>());
+
+  runApp(
+    const AppLanguages(
+      child: GlobalBlocProviders(
+        child: App(),
+      ),
+    ),
+  );
 }
+

@@ -1,29 +1,30 @@
 flavors:
   dev:
     app:
-      name: "VTN Base Flutter Dev"
-
+      name: "[Dev] Starter"
     android:
-      applicationId: "com.vtn.global.base.flutter"
-      # icon: "assets/images/logo.png"
-      firebase:
-        config: "android/app/src/dev/google-services.json"
+      applicationId: "com.hungps.flutter.starter.dev"
     ios:
-      bundleId: "com.vtn.global.base.flutter"
-      # icon: "assets/images/logo.png"
-      firebase:
-        config: "ios/Runner/dev/GoogleService-Info.plist"
+      bundleId: "com.hungps.flutter.starter.dev"
+    macos:
+      bundleId: "com.hungps.flutter.starter.dev"
 
-  prod:
+  staging:
     app:
-      name: "Example"
+      name: "[Stg] Starter"
     android:
-      applicationId: "com.vtn.example.prod"
-      # icon: "assets/images/logo_app.png"
-      # firebase:
-      #   config: "android/app/src/prod/google-services.json"
+      applicationId: "com.hungps.flutter.starter.stg"
     ios:
-      bundleId: "com.vtn.example.prod"
-      # icon: "assets/images/logo_app.png"
-      # firebase:
-      #   config: "ios/Runner/GoogleService-Info-Prod.plist"
+      bundleId: "com.hungps.flutter.starter.stg"
+    macos:
+      bundleId: "com.hungps.flutter.starter.stg"
+
+  production:
+    app:
+      name: "Starter"
+    android:
+      applicationId: "com.hungps.flutter.starter"
+    ios:
+      bundleId: "com.hungps.flutter.starter"
+    macos:
+      bundleId: "com.hungps.flutter.starter"

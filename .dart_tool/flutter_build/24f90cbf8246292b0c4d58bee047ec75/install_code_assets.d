@@ -1,0 +1,1 @@
+ /Volumes/Data/bloc_base_flutter/.dart_tool/flutter_build/24f90cbf8246292b0c4d58bee047ec75/native_assets.json: 
