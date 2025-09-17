@@ -1,5 +1,6 @@
 // @dart=3.6
 // ignore_for_file: directives_ordering
+// build_runner >=2.4.16
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:build_runner_core/build_runner_core.dart' as _i1;
 import 'package:freezed/builder.dart' as _i2;
@@ -8,8 +9,9 @@ import 'package:retrofit_generator/retrofit_generator.dart' as _i4;
 import 'package:source_gen/builder.dart' as _i5;
 import 'package:injectable_generator/builder.dart' as _i6;
 import 'package:auto_route_generator/builder.dart' as _i7;
-import 'package:build_resolvers/builder.dart' as _i8;
-import 'dart:isolate' as _i9;
+import 'dart:isolate' as _i8;
+import 'package:build_runner/src/build_script_generate/build_process_state.dart'
+    as _i9;
 import 'package:build_runner/build_runner.dart' as _i10;
 import 'dart:io' as _i11;
 
@@ -60,28 +62,10 @@ final _builders = <_i1.BuilderApplication>[
     hideOutput: true,
   ),
   _i1.apply(
-    r'auto_route_generator:auto_router_module_generator',
-    [_i7.autoRouterModuleBuilder],
-    _i1.toDependentsOf(r'auto_route_generator'),
-    hideOutput: false,
-  ),
-  _i1.apply(
     r'auto_route_generator:auto_router_generator',
     [_i7.autoRouterBuilder],
     _i1.toDependentsOf(r'auto_route_generator'),
     hideOutput: false,
-  ),
-  _i1.apply(
-    r'build_resolvers:transitive_digests',
-    [_i8.transitiveDigestsBuilder],
-    _i1.toAllPackages(),
-    isOptional: true,
-    hideOutput: true,
-    appliesBuilders: const [r'build_resolvers:transitive_digest_cleanup'],
-  ),
-  _i1.applyPostProcess(
-    r'build_resolvers:transitive_digest_cleanup',
-    _i8.transitiveDigestCleanup,
   ),
   _i1.applyPostProcess(
     r'source_gen:part_cleanup',
@@ -90,12 +74,13 @@ final _builders = <_i1.BuilderApplication>[
 ];
 void main(
   List<String> args, [
-  _i9.SendPort? sendPort,
+  _i8.SendPort? sendPort,
 ]) async {
-  var result = await _i10.run(
+  await _i9.buildProcessState.receive(sendPort);
+  _i9.buildProcessState.isolateExitCode = await _i10.run(
     args,
     _builders,
   );
-  sendPort?.send(result);
-  _i11.exitCode = result;
+  _i11.exitCode = _i9.buildProcessState.isolateExitCode!;
+  await _i9.buildProcessState.send(sendPort);
 }

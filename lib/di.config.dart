@@ -56,12 +56,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.baseUrl,
       instanceName: 'baseUrl',
     );
-    gh.singleton<_i288.NetworkDio>(() => _i288.NetworkDio(
+    gh.singleton<_i288.NetworkDio>(() => _i288.NetworkDio.new(
           tokenManager: gh<_i132.OauthTokenManager>(),
           baseUrl: gh<String>(instanceName: 'baseUrl'),
         ));
     gh.singleton<_i536.NetworkDataSource>(
-        () => _i536.NetworkDataSource(gh<_i288.NetworkDio>()));
+        () => _i536.NetworkDataSource.new(gh<_i288.NetworkDio>()));
     gh.singleton<_i344.AuthRepository>(() => _i522.DefaultAuthRepository(
         networkDataSource: gh<_i536.NetworkDataSource>()));
     gh.singleton<_i470.LoginUseCase>(
